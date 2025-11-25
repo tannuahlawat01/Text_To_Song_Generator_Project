@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Song Generator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff6a00);
+      background-attachment: fixed;
+      color: #000; /* black text */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 90%;
+      animation: slideIn 0.8s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #000;
+    }
+
+    button {
+      padding: 0.75rem 1rem;
+      background: #10b981;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    button:hover {
+      background: #059669;
+      transform: scale(1.05);
+    }
+
+    .lyrics-box {
+      background: rgba(255,255,255,0.6);
+      color: #000;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    a {
+      display: block;
+      margin-top: 0.5rem;
+      color: #1d4ed8;
+      text-align: center;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎶 AI Song Generator</h1>
+    <form method="POST">
+      <input type="text" name="theme" placeholder="Enter song theme or mood..." required />
+      <button type="submit">Generate Song</button>
+    </form>
+
+    {% if lyrics %}
+      <div class="lyrics-box">
+        <h3>Generated Lyrics:</h3>
+        <p>{{ lyrics }}</p>
+      </div>
+    {% endif %}
+
+    {% if audio_file %}
+      <audio controls>
+        <source src="{{ audio_file }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <a href="{{ url_for('download') }}">⬇ Download MP3</a>
+    {% endif %}
+  </div>
+</body>
+</html>
